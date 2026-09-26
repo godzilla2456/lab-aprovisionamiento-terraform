@@ -1,0 +1,30 @@
+variable "db_port" {
+  type        = map(number)
+  description = "Puerto externo de PostgreSQL por ambiente"
+}
+
+variable "db_password" {
+  type        = map(string)
+  description = "Contraseña de PostgreSQL por ambiente"
+  sensitive   = true
+}
+
+variable "backend_port" {
+  type        = map(number)
+  description = "Puerto externo del backend por ambiente"
+}
+
+variable "backend_replicas" {
+  type        = map(number)
+  description = "Numero de replicas del backend por ambiente"
+}
+
+variable "frontend_port" {
+  type        = map(number)
+  description = "Puerto externo del frontend por ambiente"
+}
+
+variable "frontend_replicas" {
+  type        = map(number)
+  description = "Numero de replicas del frontend por ambiente"
+}
