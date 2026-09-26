@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Laboratorio de aprovisionamiento — Frontend</title>
+<style>
+  body { font-family: sans-serif; background: #f4f6f8; color: #222; padding: 2rem; }
+  h1 { color: #2c3e50; }
+  .card { background: #fff; border-radius: 8px; padding: 1rem 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  .ok { color: #27ae60; }
+  .error { color: #c0392b; }
+</style>
+</head>
+<body>
+  <h1>Laboratorio de aprovisionamiento — Frontend</h1>
+  <div class="card" id="info">Cargando...</div>
+  <div class="card" id="db">Cargando...</div>
+
+  <script>
+    const backendUrl = location.protocol + "//" + location.hostname + ":" + (Number(location.port) + 1);
+
+    fetch(backendUrl + "/")
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById("info").innerHTML =
+          "<strong>Ambiente:</strong> " + data.ambiente + "<br>" +
+          "<strong>Instancia:</strong> " + data.instancia;
+      })
+      .catch(err => {
+        document.getElementById("info").innerHTML = "<span class='error'>Error al contactar el backend: " + err + "</span>";
+      });
+
+    fetch(backendUrl + "/db")
+      .then(r => r.json())
+      .then(data => {
+        const clase = data.bd === "conectado" ? "ok" : "error";
+        document.getElementById("db").innerHTML =
+          "<strong>Base de datos:</strong> <span class='" + clase + "'>" + data.bd + "</span>";
+      })
+      .catch(err => {
+        document.getElementById("db").innerHTML = "<span class='error'>Error al consultar la BD: " + err + "</span>";
+      });
+  </script>
+</body>
+</html>
